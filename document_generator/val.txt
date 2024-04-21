@@ -1,0 +1,267 @@
+Here's the updated schema for your collections based on the suggested changes:
+
+1. **Products Collection**:
+   - Fields:
+     - `product_id`: Unique identifier for the product.
+     - `description`: Description of the product.
+     - `price`: Price of the product.
+     - `inventory_level`: Current inventory level of the product.
+     - `supplier_id`: Reference to the supplier who provides the product.
+     - `category`: Category of the product.
+
+2. **Suppliers Collection**:
+   - Fields:
+     - `supplier_id`: Unique identifier for the supplier.
+     - `company_name`: Name of the supplier company.
+     - `contact_info`: Contact information for the supplier.
+
+3. **Customers Collection**:
+   - Fields:
+     - `customer_id`: Unique identifier for the customer.
+     - `first_name`: First name of the customer.
+     - `last_name`: Last name of the customer.
+     - `email`: Email address of the customer.
+     - `phone_number`: Phone number of the customer.
+     - `purchase_history`: Array of past transactions made by the customer.
+
+4. **Transactions Collection**:
+   - Fields:
+     - `transaction_id`: Unique identifier for the transaction.
+     - `customer_id`: Reference to the customer who made the transaction.
+     - `products_sold`: Array of product references involved in the transaction.
+     - `transaction_date`: Date and time of the transaction.
+     - `total_amount`: Total amount of the transaction.
+
+5. **Employees Collection**:
+   - Fields:
+     - `employee_id`: Unique identifier for the employee.
+     - `first_name`: First name of the employee.
+     - `last_name`: Last name of the employee.
+     - `role`: Role or position of the employee.
+     - `contact_info`: Contact information for the employee.
+     - `work_schedule`: Work schedule of the employee.
+
+
+
+========================================================================
+VALIDATORS FOR COLLECTIONS
+========================================================================
+Product
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["product_id", "name", "category", "description", "brand"],
+    "properties": {
+      "product_id": {
+        "bsonType": "string",
+        "description": "Unique identifier for the product"
+      },
+      "name": {
+        "bsonType": "string",
+        "description": "name of the product"
+      },
+      "category": {
+        "bsonType": "string",
+        "description": "Category of the product"
+      },
+      "description": {
+        "bsonType": "string",
+        "minLength": 1,
+        "maxLength": 255
+      },
+      "brand": {
+        "bsonType": "string",
+        "minLength": 1,
+        "maxLength": 50
+      }
+
+    }
+  }
+}
+
+
+
+2. Suppliers Collection:
+
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["supplier_id", "company_name", "contact_info"],
+    "properties": {
+      "supplier_id": {
+        "bsonType": "string",
+        "description": "Unique identifier for the supplier"
+      },
+      "company_name": {
+        "bsonType": "string",
+        "description": "Name of the supplier company"
+      },
+      "contact_info": {
+        "bsonType": "object",
+        "required": ["email", "phone_number"],
+        "properties": {
+          "email": {
+            "bsonType": "string",
+            "description": "Email address of the supplier"
+          },
+          "phone_number": {
+            "bsonType": "string",
+            "description": "Phone number of the supplier"
+          }
+        }
+      }
+    }
+  }
+}
+
+3. Customers Collection:
+
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["customer_id", "first_name", "last_name", "email", "phone_number", "purchase_history"],
+    "properties": {
+      "customer_id": {
+        "bsonType": "string",
+        "description": "Unique identifier for the customer"
+      },
+      "first_name": {
+        "bsonType": "string",
+        "description": "First name of the customer"
+      },
+      "last_name": {
+        "bsonType": "string",
+        "description": "Last name of the customer"
+      },
+      "email": {
+        "bsonType": "string",
+        "description": "Email address of the customer"
+      },
+      "phone_number": {
+        "bsonType": "string",
+        "description": "Phone number of the customer"
+      },
+      "purchase_history": {
+        "bsonType": "array",
+        "description": "Array of past transactions made by the customer"
+      }
+    }
+  }
+}
+
+
+4. Transactions Collection
+
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["transaction_id", "customer_id", "products_sold", "transaction_date", "total_amount"],
+    "properties": {
+      "transaction_id": {
+        "bsonType": "string",
+        "description": "Unique identifier for the transaction"
+      },
+      "customer_id": {
+        "bsonType": "string",
+        "description": "Reference to the customer who made the transaction"
+      },
+      "products_sold": {
+        "bsonType": "array",
+        "description": "Array of product references involved in the transaction"
+      },
+      "transaction_date": {
+        "bsonType": "date",
+        "description": "Date and time of the transaction"
+      },
+      "total_amount": {
+        "bsonType": "decimal",
+        "minimum": 0,
+        "description": "Total amount of the transaction"
+      }
+    }
+  }
+}
+
+
+5. Employees Collection:
+
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["employee_id", "first_name", "last_name", "role", "contact_info", "work_schedule"],
+    "properties": {
+      "employee_id": {
+        "bsonType": "string",
+        "description": "Unique identifier for the employee"
+      },
+      "first_name": {
+        "bsonType": "string",
+        "description": "First name of the employee"
+      },
+      "last_name": {
+        "bsonType": "string",
+        "description": "Last name of the employee"
+      },
+      "role": {
+        "bsonType": "string",
+        "description": "Role or position of the employee"
+      },
+      "contact_info": {
+        "bsonType": "object",
+        "required": ["email", "phone_number"],
+        "properties": {
+          "email": {
+            "bsonType": "string",
+            "description": "Email address of the employee"
+          },
+          "phone_number": {
+            "bsonType": "string",
+            "description": "Phone number of the employee"
+          }
+        }
+      },
+      "work_schedule": {
+        "bsonType": "string",
+        "description": "Work schedule of the employee"
+      }
+    }
+  }
+}
+
+
+6. Inventory Collection:
+
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["product_id", "quantity", "unit_price", "supplier_id", "dimensions", "weight"],
+    "properties": {
+      "product_id": {
+        "bsonType": "string",
+        "description": "Unique identifier for the product"
+      },
+      "quantity": {
+        "bsonType": "int",
+        "minimum": 0,
+        "description": "Quantity of the product in inventory"
+      },
+      "unit_price": {
+        "bsonType": "decimal",
+        "minimum": 0,
+        "description": "Price of the product"
+      },
+      "supplier_id": {
+        "bsonType": "string",
+        "description": "Reference to the supplier who provides the product"
+      },
+      "dimensions": {
+        "bsonType": "string",
+        "pattern": "^[0-9]+\\s*x\\s*[0-9]+\\s*x\\s*[0-9]+$"
+      },
+      "weight": {
+        "bsonType": "number",
+        "minimum": 0
+      }
+    }
+  }
+}
