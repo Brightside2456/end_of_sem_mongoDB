@@ -1,8 +1,7 @@
 const express = require('express')
-
 const {connectToDb, getDb} = require('./db')
 const {ObjectId} = require('mongodb')
-
+const t_router = require('./routes/transaction')
 const app = express()
 
 app.use(express.json())
@@ -11,9 +10,13 @@ connectToDb((err) => {
     if (!err){
         app.listen(3000, () => {
             console.log('Server is running on port 3000')
-        })
+        }
+        
+    )
         db = getDb()
     }
+
+    else console.log(err);
 })
 
 
@@ -27,6 +30,9 @@ connectToDb((err) => {
 //         res.status(500).json({error: "Could Not list collections"})
 //     })
 // })
+
+//transaction middleware
+app.use("/trans", t_router);
 
 // route to list all collections
 app.get('/list_collections', async (req, res) => {

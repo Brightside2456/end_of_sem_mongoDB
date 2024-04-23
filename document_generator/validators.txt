@@ -5,36 +5,37 @@ make things right
 val 1
 ==========================================================================
 db.createCollection("transaction", {
-validator : {
-  "$jsonSchema": {
-    "bsonType": "object",
-    "required": ["transaction_id", "customer_id", "products_sold", "transaction_date", "total_amount"],
-    "properties": {
-      "transaction_id": {
-        "bsonType": "string",
-        "description": "Unique identifier for the transaction"
-      },
-      "customer_id": {
-        "bsonType": "string",
-        "description": "Reference to the customer who made the transaction"
-      },
-      "products_sold": {
-        "bsonType": "array",
-        "description": "Array of product references involved in the transaction"
-      },
-      "transaction_date": {
-        "bsonType": "date",
-        "description": "Date and time of the transaction"
-      },
-      "total_amount": {
-        "bsonType": "decimal",
-        "minimum": 0,
-        "description": "Total amount of the transaction"
+  validator: {
+    "$jsonSchema": {
+      "bsonType": "object",
+      "required": ["transaction_id", "customer_id", "products_sold", "transaction_date", "total_amount"],
+      "properties": {
+        "transaction_id": {
+          "bsonType": "string",
+          "description": "Unique identifier for the transaction"
+        },
+        "customer_id": {
+          "bsonType": "string",
+          "description": "Reference to the customer who made the transaction"
+        },
+        "products_sold": {
+          "bsonType": "array",
+          "description": "Array of product references involved in the transaction"
+        },
+        "transaction_date": {
+          "bsonType": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+          "description": "Date and time of the transaction in ISO 8601 format"
+        },
+        "total_amount": {
+          "bsonType": "number",
+          "minimum": 0,
+          "description": "Total amount of the transaction"
+        }
       }
     }
   }
-}
-})
+});
 
 ==========================================================================
 val 2
