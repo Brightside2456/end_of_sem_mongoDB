@@ -20,7 +20,7 @@ const  Transaction = {
 
                     const db = await getDb()
                     console.log(db);
-                    const result =  db.collection("transaction").insertOne(transactionData);
+                    const result = await db.collection("transaction").insertOne(transactionData);
                     return result
 
 
@@ -32,7 +32,7 @@ const  Transaction = {
     async getAllTrasaction(){
         try {
                 const db = await getDb()
-                const result = db.collection("transaction").find().toArray()
+                const result = await db.collection("transaction").find().toArray()
                 return result
 
         } catch (error) {
@@ -40,10 +40,32 @@ const  Transaction = {
                 throw new Error("Error getting all Transaction")
         }
     },
+    async getOneTrasaction(id){
+        try {
+                const db = await getDb()
+                const result = await db.collection("transaction").findOne({_id: new ObjectId(id)})
+                return result
+
+        } catch (error) {
+                console.log(error)
+                throw new Error("Error getting all Transaction")
+        }
+    },
+    async updateTransaction(objectId, updateFields){
+        try {
+                const db = await getDb();
+                result = await db.collection("transaction").updateOne({_id : new ObjectId(objectId)}, {$set : updateFields});
+                return result
+
+        } catch (error) {
+                console.log("Could not update document", error)
+                throw new Error("Error updating Transaction")
+        }
+    },
     async deleteTransaction(objectId){
         try {
                 const db = await getDb()
-                const result = db.collection("transaction").deleteOne({_id : new ObjectId(objectId)})
+                const result = await db.collection("transaction").deleteOne({_id : new ObjectId(objectId)})
                 return result
         } catch (error) {
                 console.log(error);

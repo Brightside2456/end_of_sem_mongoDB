@@ -1,0 +1,119 @@
+db.inventory.insertMany([{"inventory_id": "P027", "product_id": "P681", "quantity": 87, "unit_price": 543.58, "supplier_id": "S245", "dimensions": "16 x 21 x 46", "weight": 14.04},
+{"inventory_id": "P295", "product_id": "P070", "quantity": 83, "unit_price": 662.87, "supplier_id": "S321", "dimensions": "22 x 30 x 38", "weight": 12.51},
+{"inventory_id": "P724", "product_id": "P364", "quantity": 36, "unit_price": 837.86, "supplier_id": "S692", "dimensions": "2 x 2 x 47", "weight": 12.5},
+{"inventory_id": "P338", "product_id": "P069", "quantity": 46, "unit_price": 498.17, "supplier_id": "S132", "dimensions": "19 x 46 x 21", "weight": 11.75},
+{"inventory_id": "P955", "product_id": "P540", "quantity": 95, "unit_price": 856.08, "supplier_id": "S734", "dimensions": "36 x 32 x 14", "weight": 8.62},
+{"inventory_id": "P178", "product_id": "P187", "quantity": 14, "unit_price": 782.3, "supplier_id": "S450", "dimensions": "50 x 36 x 22", "weight": 33.61},
+{"inventory_id": "P661", "product_id": "P078", "quantity": 70, "unit_price": 918.07, "supplier_id": "S923", "dimensions": "20 x 50 x 10", "weight": 17.67},
+{"inventory_id": "P788", "product_id": "P716", "quantity": 68, "unit_price": 655.62, "supplier_id": "S290", "dimensions": "32 x 30 x 24", "weight": 6.05},
+{"inventory_id": "P939", "product_id": "P983", "quantity": 16, "unit_price": 914.43, "supplier_id": "S800", "dimensions": "18 x 40 x 34", "weight": 41.4}
+]);
+
+
+db.inventory.insertOne({"inventory_id": "P139", "product_id": "P832", "quantity": 99, "unit_price": 474.39, "supplier_id": "S814", "dimensions": "22 x 47 x 29", "weight": 3.18});
+
+
+db.employee.insertMany([
+{"employee_id": "E253", "first_name": "Kayla", "last_name": "Gordon", "role": "Quantity surveyor", "contact_info": {"email": "bullockjose@example.com", "phone_number": "001-449-533-7336x91393"}, "work_schedule": "Monday to Friday, 9:00 AM - 5:00 PM"},
+{"employee_id": "E392", "first_name": "Joseph", "last_name": "Rivers", "role": "Artist", "contact_info": {"email": "mmontgomery@example.org", "phone_number": "(411)794-8132"}, "work_schedule": "Flexible"},
+{"employee_id": "E513", "first_name": "Willie", "last_name": "Taylor", "role": "Sport and exercise psychologist", "contact_info": {"email": "eric67@example.net", "phone_number": "(397)368-6513x803"}, "work_schedule": "Monday to Friday, 9:00 AM - 5:00 PM"},
+{"employee_id": "E593", "first_name": "Barbara", "last_name": "Moss", "role": "Animal nutritionist", "contact_info": {"email": "progers@example.org", "phone_number": "466-932-6986x23449"}, "work_schedule": "Monday to Friday, 9:00 AM - 5:00 PM"},
+{"employee_id": "E311", "first_name": "Stephanie", "last_name": "Schmidt", "role": "International aid/development worker", "contact_info": {"email": "stephensonsamantha@example.org", "phone_number": "+1-236-690-2413x81459"}, "work_schedule": "Flexible"}
+]);
+
+
+db.supplier.insertMany([{"supplier_id": "S727", "company_name": "Miller-Townsend", "contact_info": {"email": "mikewilliams@example.org", "phone_number": "394.968.7090"}},
+{"supplier_id": "S585", "company_name": "Gilbert Inc", "contact_info": {"email": "gibsonbrandi@example.org", "phone_number": "(651)457-8560x925"}},
+{"supplier_id": "S254", "company_name": "Williams LLC", "contact_info": {"email": "suzanne03@example.com", "phone_number": "599-774-2743x30009"}},
+{"supplier_id": "S995", "company_name": "Olson, Hernandez and Fleming", "contact_info": {"email": "brent31@example.net", "phone_number": "409.920.8155"}},
+{"supplier_id": "S183", "company_name": "Spencer-Underwood", "contact_info": {"email": "kfox@example.net", "phone_number": "634-239-6838x2362"}},
+{"supplier_id": "S899", "company_name": "Henry, Welch and Lewis", "contact_info": {"email": "higginsnatalie@example.com", "phone_number": "+1-233-632-0124x8558"}},
+{"supplier_id": "S836", "company_name": "Smith, Meyer and Caldwell", "contact_info": {"email": "curtisfrench@example.com", "phone_number": "001-521-774-0239x5760"}},
+{"supplier_id": "S331", "company_name": "Vazquez-Edwards", "contact_info": {"email": "munozcharlene@example.com", "phone_number": "001-912-760-1879"}}
+]);
+db.inventory.insertOne({"inventory_id": "P436", "product_id": "P670", "quantity": 88, "unit_price": 977.73, "supplier_id": "S529", "dimensions": "46 x 48 x 28", "weight": 7.96});
+
+db.inventory.updateMany({{inventory_id: "PO27"}, {$set : {product_id : ObjectId('66246a7bf6829ad9506215df')}}},{{inventory_id: "P295"}, {$set : {product_id : ObjectId('6628d5de9d9b98fd197780c1')}}});
+
+
+Bulk Write
+db.students.bulkWrite([{updateOne:{filter:{inventory_id: "PO27"},update:{$set:{product_id : ObjectId('66246a7bf6829ad9506215df')}}}}, {updateOne:{filter:{inventory_id: "P295"},update:{$set:{product_id : ObjectId('6628d5de9d9b98fd197780c1')}}}}])
+
+db.inventory.bulkWrite([
+    { updateOne: { filter: { inventory_id: "PO27" }, update: { $set: { product_id: ObjectId('66246a7bf6829ad9506215df') } } } },
+    { updateOne: { filter: { inventory_id: "P295" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780c1') } } } },
+    { updateOne: { filter: { inventory_id: "P724" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780c2') } } } },
+    { updateOne: { filter: { inventory_id: "P338" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780c3') } } } },
+    { updateOne: { filter: { inventory_id: "P955" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780c4') } } } },
+    { updateOne: { filter: { inventory_id: "P178" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780c5') } } } },
+    { updateOne: { filter: { inventory_id: "P661" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780c6') } } } },
+    { updateOne: { filter: { inventory_id: "P788" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780c7') } } } },
+    { updateOne: { filter: { inventory_id: "P939" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780c8') } } } },
+    { updateOne: { filter: { inventory_id: "P139" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780c9') } } } },
+    { updateOne: { filter: { inventory_id: "P436" }, update: { $set: { product_id: ObjectId('6628d5de9d9b98fd197780ca') } } } }
+]);
+
+//Insert into Supplier Database
+db.supplier.insertMany([{"supplier_id": "S545", "company_name": "Olson Ltd", "contact_info": {"email": "cynthiacook@example.com", "phone_number": "001-422-952-8011x389"}},{"supplier_id": "S242", "company_name": "Stout-Roberts", "contact_info": {"email": "orobertson@example.net", "phone_number": "+1-245-642-3190x74575"}},{"supplier_id": "S670", "company_name": "Ball, Crosby and Taylor", "contact_info": {"email": "joelpham@example.net", "phone_number": "794-215-5901"}}]);
+
+//Bulk Referencing supplier_id in Inventory collection
+
+
+db.inventory.bulkWrite([
+    { updateOne: { filter: { inventory_id: "PO27" }, update: { $set: { supplier_id: ObjectId('66246babf6829ad9506215e0') } } } },
+    { updateOne: { filter: { inventory_id: "P295" }, update: { $set: { supplier_id: ObjectId('662a794568727ed2bd62f0ec') } } } },
+    { updateOne: { filter: { inventory_id: "P724" }, update: { $set: { supplier_id: ObjectId('662a794568727ed2bd62f0ed') } } } },
+    { updateOne: { filter: { inventory_id: "P338" }, update: { $set: { supplier_id: ObjectId('662a794568727ed2bd62f0ee') } } } },
+    { updateOne: { filter: { inventory_id: "P955" }, update: { $set: { supplier_id: ObjectId('662a794568727ed2bd62f0ef') } } } },
+    { updateOne: { filter: { inventory_id: "P178" }, update: { $set: { supplier_id: ObjectId('662a794568727ed2bd62f0f0') } } } },
+    { updateOne: { filter: { inventory_id: "P661" }, update: { $set: { supplier_id: ObjectId('662a794568727ed2bd62f0f1') } } } },
+    { updateOne: { filter: { inventory_id: "P788" }, update: { $set: { supplier_id: ObjectId('662a794568727ed2bd62f0f2') } } } },
+    { updateOne: { filter: { inventory_id: "P939" }, update: { $set: { supplier_id: ObjectId('662ae601d39913d7f3fca3a0') } } } },
+    { updateOne: { filter: { inventory_id: "P139" }, update: { $set: { supplier_id: ObjectId('662ae601d39913d7f3fca3a1') } } } },
+    { updateOne: { filter: { inventory_id: "P436" }, update: { $set: { supplier_id: ObjectId('662ae601d39913d7f3fca3a2') } } } }
+]);
+
+
+
+// Insert into Transactions
+db.transaction.insertMany([
+{"transaction_id": "T041831", "customer_id": "C325233", "products_sold": ["P050", "P740", "P016"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 499.79},
+{"transaction_id": "T826635", "customer_id": "C305526", "products_sold": ["P369", "P337", "P678"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 472.53},
+{"transaction_id": "T044284", "customer_id": "C563699", "products_sold": ["P617", "P737", "P102"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 140.54},
+{"transaction_id": "T207519", "customer_id": "C680782", "products_sold": ["P050", "P585", "P298", "P945"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 900.56},
+{"transaction_id": "T843628", "customer_id": "C622296", "products_sold": ["P929"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 697.72},
+{"transaction_id": "T528333", "customer_id": "C494544", "products_sold": ["P027", "P591"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 149.79},
+{"transaction_id": "T312520", "customer_id": "C718341", "products_sold": ["P905", "P355", "P009", "P101"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 227.82},
+{"transaction_id": "T371668", "customer_id": "C853261", "products_sold": ["P978", "P942", "P542", "P188", "P524"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 556.43},
+{"transaction_id": "T342988", "customer_id": "C545595", "products_sold": ["P937", "P070", "P098", "P562", "P904"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 507.89},
+{"transaction_id": "T570122", "customer_id": "C601955", "products_sold": ["P651", "P739", "P401", "P485", "P344"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 302.22},
+{"transaction_id": "T200041", "customer_id": "C806411", "products_sold": ["P811", "P031", "P252", "P673", "P873"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 645.51},
+{"transaction_id": "T820797", "customer_id": "C881931", "products_sold": ["P167", "P765", "P190"], "transaction_date": "2023-07-17T07:11:52Z", "total_amounst": 790.44},
+{"transaction_id": "T803761", "customer_id": "C810186", "products_sold": ["P880", "P562", "P237"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 812.44},
+{"transaction_id": "T984271", "customer_id": "C364844", "products_sold": ["P721"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 104.02},
+{"transaction_id": "T520505", "customer_id": "C582892", "products_sold": ["P170"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 986.67},
+{"transaction_id": "T213538", "customer_id": "C058412", "products_sold": ["P136", "P243", "P201", "P384"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 908.43},
+{"transaction_id": "T327639", "customer_id": "C032620", "products_sold": ["P505"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 266.5},
+{"transaction_id": "T003887", "customer_id": "C718834", "products_sold": ["P449"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 187.16},
+{"transaction_id": "T858086", "customer_id": "C694997", "products_sold": ["P826", "P655", "P054", "P113"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 902.53},
+{"transaction_id": "T720533", "customer_id": "C153458", "products_sold": ["P345", "P494", "P341", "P899", "P419"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 932.82},
+{"transaction_id": "T498620", "customer_id": "C200257", "products_sold": ["P706", "P833", "P393", "P882"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 53.49},
+{"transaction_id": "T897658", "customer_id": "C344185", "products_sold": ["P236"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 197.94},
+{"transaction_id": "T339689", "customer_id": "C929375", "products_sold": ["P496", "P221"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 963.66},
+{"transaction_id": "T857893", "customer_id": "C854446", "products_sold": ["P923", "P901", "P026", "P816", "P557"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 359.35},
+{"transaction_id": "T625859", "customer_id": "C956552", "products_sold": ["P473", "P608"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 545.4},
+{"transaction_id": "T352321", "customer_id": "C292062", "products_sold": ["P851"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 549.71},
+{"transaction_id": "T850917", "customer_id": "C109589", "products_sold": ["P475", "P771", "P522"], "transaction_date": "2023-07-17T07:11:52Z", "total_amount": 246.5}]);
+
+
+
+
+
+
+//$lookup aggregation (like inner join)
+
+// Join each product to the inventory(So that  you can extract the name from the product collectionand use it withthe inventry details) 
+db.inventory.aggregate({$lookup: {from : "product", localField: "product_id", foreignField: "_id", as: "prd"}})
+
+// Join Customer to the transations theyve made
+db.transaction.aggregate({$lookup : {from: "customer", localField: "customer_id", foreignField: "customer_id", as: "customer"}})

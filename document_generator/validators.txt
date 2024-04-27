@@ -8,7 +8,7 @@ db.createCollection("transaction", {
   validator: {
     "$jsonSchema": {
       "bsonType": "object",
-      "required": ["transaction_id", "customer_id", "products_sold", "transaction_date", "total_amount"],
+      "required": ["transaction_id"],
       "properties": {
         "transaction_id": {
           "bsonType": "string",
@@ -19,9 +19,23 @@ db.createCollection("transaction", {
           "description": "Reference to the customer who made the transaction"
         },
         "products_sold": {
-          "bsonType": "array",
-          "description": "Array of product references involved in the transaction"
-        },
+        "bsonType": "array",
+        "required": ["name", "quantity", "unit_price"],
+        "properties": {
+          "name": {
+            "bsonType": "string",
+            "description": "Name of the product_sold"
+          },
+          "quantity": {
+            "bsonType": "number",
+            "description": "Quantity of the product sold"
+          },
+          "unit_price": {
+            "bsonType": "double",
+            "description": "Unit price of the particular inventory"
+          }
+        }
+      },
         "transaction_date": {
           "bsonType": "string",
           "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
@@ -83,7 +97,7 @@ validator : {
     }
   }
 }
-})
+});
 
 ==========================================================================
 val 3
@@ -93,7 +107,7 @@ db.createCollection("customer", {
 validator: {
   "$jsonSchema": {
     "bsonType": "object",
-    "required": ["customer_id", "first_name", "last_name", "email", "phone_number", "purchase_history"],
+    "required": ["customer_id", "first_name", "last_name", "email", "password", "phone_number", "address"],
     "properties": {
       "customer_id": {
         "bsonType": "string",
@@ -111,18 +125,22 @@ validator: {
         "bsonType": "string",
         "description": "Email address of the customer"
       },
+      "password": {
+        "bsonType": "string",
+        "description": "Password of the customer"
+      },
       "phone_number": {
         "bsonType": "string",
         "description": "Phone number of the customer"
       },
-      "purchase_history": {
-        "bsonType": "array",
-        "description": "Array of past transactions made by the customer"
-      }
+      "address": {
+          "bsonType": "array",
+          "description": "Array of Customer address"
+        }
     }
   }
 }
-})
+});
 
 ==========================================================================
 val 4
@@ -158,7 +176,7 @@ validator: {
     }
   }
 }
-})
+});
 
 ==========================================================================
 val 5
@@ -196,45 +214,249 @@ validator :{
     }
   }
 }
-})
+});
 
 ==========================================================================
 val 6
 ==========================================================================
 
 db.createCollection("inventory", {
-validator :{
-  "$jsonSchema": {
-    "bsonType": "object",
-    "required": ["inventory_id", "quantity", "unit_price", "supplier_id", "dimensions", "weight"],
-    "properties": {
-      "product_id": {
-        "bsonType": "string",
-        "description": "Unique identifier for the product"
-      },
-      "quantity": {
-        "bsonType": "int",
-        "minimum": 0,
-        "description": "Quantity of the product in inventory"
-      },
-      "unit_price": {
-        "bsonType": "decimal",
-        "minimum": 0,
-        "description": "Price of the product"
-      },
-      "supplier_id": {
-        "bsonType": "string",
-        "description": "Reference to the supplier who provides the product"
-      },
-      "dimensions": {
-        "bsonType": "string",
-        "pattern": "^[0-9]+\\s*x\\s*[0-9]+\\s*x\\s*[0-9]+$"
-      },
-      "weight": {
-        "bsonType": "number",
-        "minimum": 0
+  validator: {
+    "$jsonSchema": {
+      "bsonType": "object",
+      "required": ["inventory_id", "product_id", "quantity", "unit_price", "supplier_id", "dimensions", "weight"],
+      "properties": {
+        "inventory_id": {
+          "bsonType": "string",
+          "description": "Unique identifier for the inventory item"
+        },
+        "product_id": {
+          "bsonType": "objectId",
+          "description": "Reference to the product document"
+        },
+        "quantity": {
+          "bsonType": "int",
+          "minimum": 0,
+          "description": "Quantity of the product in inventory"
+        },
+        "unit_price": {
+          "bsonType": "double",
+          "minimum": 0,
+          "description": "Unit price of the product"
+        },
+        "supplier_id": {
+          "bsonType": "objectId",
+          "description": "Reference to the supplier document"
+        },
+        "dimensions": {
+          "bsonType": "string",
+          "pattern": "^\\d+\\s*x\\s*\\d+\\s*x\\s*\\d+$",
+          "description": "Dimensions of the product in the format 'length x width x height'"
+        },
+        "weight": {
+          "bsonType": "double",
+          "minimum": 0,
+          "description": "Weight of the product"
+        }
       }
     }
   }
-}
+});
+
+
+==========================================================================
+val 7
+==========================================================================
+
+db.createCollection("logs", {
+  validator: {
+    "$jsonSchema": {
+      "bsonType": "object",
+      "required": ["log_id", "log_type", "log_message", "timestamp"],
+      "properties": {
+        "log_id": {
+          "bsonType": "string",
+          "description": "Unique identifier for the log entry"
+        },
+        "log_type": {
+          "bsonType": "string",
+          "description": "Type of log entry (e.g., error, warning, info, debug)"
+        },
+        "log_message": {
+          "bsonType": "string",
+          "description": "Log message"
+        },
+        "timestamp": {
+          "bsonType": "date",
+          "description": "Timestamp of the log entry"
+        },
+        "user_id": {
+          "bsonType": "string",
+          "description": "Identifier of the user associated with the log entry (optional)"
+        }
+      }
+    }
+  }
+});
+
+==========================================================================
+val 8
+==========================================================================
+db.createCollection("reviews", {
+  validator: {
+    "$jsonSchema": {
+      "bsonType": "object",
+      "required": ["review_id", "product_id", "customer_id", "rating", "review_text", "timestamp"],
+      "properties": {
+        "review_id": {
+          "bsonType": "string",
+          "description": "Unique identifier for the review"
+        },
+        "product_id": {
+          "bsonType": "string",
+          "description": "Identifier of the product being reviewed"
+        },
+        "customer_id": {
+          "bsonType": "string",
+          "description": "Identifier of the customer who wrote the review"
+        },
+        "rating": {
+          "bsonType": "int",
+          "minimum": 1,
+          "maximum": 5,
+          "description": "Rating given by the customer (1-5)"
+        },
+        "review_text": {
+          "bsonType": "string",
+          "description": "Text of the review"
+        },
+        "timestamp": {
+          "bsonType": "date",
+          "description": "Timestamp of the review"
+        }
+      }
+    }
+  }
 })
+
+==========================================================================
+val 9
+==========================================================================
+
+db.createCollection("orders", {
+  validator: {
+    "$jsonSchema": {
+      "bsonType": "object",
+      "required": ["order_id", "customer_id", "order_date", "order_items", "total_amount", "shipping_address", "order_status"],
+      "properties": {
+        "order_id": {
+          "bsonType": "string",
+          "description": "Unique identifier for the order"
+        },
+        "customer_id": {
+          "bsonType": "string",
+          "description": "Identifier of the customer who placed the order"
+        },
+        "order_date": {
+          "bsonType": "date",
+          "description": "Date and time when the order was placed"
+        },
+        "order_items": {
+          "bsonType": "array",
+          "items": {
+            "bsonType": "object",
+            "required": ["product_id", "quantity", "price"],
+            "properties": {
+              "product_id": {
+                "bsonType": "string",
+                "description": "Identifier of the product in the order"
+              },
+              "quantity": {
+                "bsonType": "int",
+                "minimum": 1,
+                "description": "Quantity of the product ordered"
+              },
+              "price": {
+                "bsonType": "double",
+                "minimum": 0,
+                "description": "Price of the product at the time of order"
+              }
+            }
+          }
+        },
+        "total_amount": {
+          "bsonType": "double",
+          "minimum": 0,
+          "description": "Total amount of the order"
+        },
+        "shipping_address": {
+          "bsonType": "object",
+          "required": ["street", "city", "state", "zip", "country"],
+          "properties": {
+            "street": {
+              "bsonType": "string",
+              "description": "Street address"
+            },
+            "city": {
+              "bsonType": "string",
+              "description": "City"
+            },
+            "state": {
+              "bsonType": "string",
+              "description": "State or province"
+            },
+            "zip": {
+              "bsonType": "string",
+              "description": "ZIP or postal code"
+            },
+            "country": {
+              "bsonType": "string",
+              "description": "Country"
+            }
+          }
+        },
+        "order_status": {
+          "bsonType": "string",
+          "description": "Current status of the order (e.g., pending, shipped, delivered, cancelled)"
+        }
+      }
+    }
+  }
+});
+==========================================================================
+val 10
+==========================================================================
+db.createCollection("promotions", {
+  validator: {
+    "$jsonSchema": {
+      "bsonType": "object",
+      "required": ["promotion_id", "promotion_type", "description", "start_date", "end_date", "criteria"],
+      "properties": {
+        "promotion_id": {
+          "bsonType": "string",
+          "description": "Unique identifier for the promotion"
+        },
+        "promotion_type": {
+          "bsonType": "string",
+          "description": "Type of promotion (e.g., discount, free shipping, buy-one-get-one)"
+        },
+        "description": {
+          "bsonType": "string",
+          "description": "Description of the promotion"
+        },
+        "start_date": {
+          "bsonType": "date",
+          "description": "Start date of the promotion"
+        },
+        "end_date": {
+          "bsonType": "date",
+          "description": "End date of the promotion"
+        },
+        "criteria": {
+          "bsonType": "object",
+          "description": "Criteria for the promotion to apply (e.g., minimum purchase amount, specific products, customer segments)"
+        }
+      }
+    }
+  }
+});

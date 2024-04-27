@@ -2,6 +2,11 @@ const express = require('express')
 const {connectToDb, getDb} = require('./db')
 const {ObjectId} = require('mongodb')
 const t_router = require('./routes/transaction')
+const s_router = require('./routes/supplier')
+const p_router = require('./routes/product')
+const i_router = require('./routes/inventory')
+const e_router = require('./routes/employee')
+const c_router = require('./routes/customer')
 const app = express()
 
 app.use(express.json())
@@ -33,6 +38,22 @@ connectToDb((err) => {
 
 //transaction middleware
 app.use("/trans", t_router);
+
+//supplier middleware
+app.use('/sup', s_router);
+
+//Product MiddleWare
+app.use('/prod', p_router);
+
+//Inventory middleware
+app.use("/invent", i_router);
+
+//Employee middleware
+app.use("/emp", e_router);
+
+//Customer middleware
+app.use("/customer", c_router);
+
 
 // route to list all collections
 app.get('/list_collections', async (req, res) => {
