@@ -28,10 +28,14 @@ async createSupplier(supplierData){
                 throw new Error("Error creating transaction")
         }
 },
-async getAllSupplier(){
+async getAllSupplier(page){
+        let itemsPerPage = 5
     try {
             const db = await getDb()
-            const result = await db.collection("supplier").find().toArray()
+            const result = await db.collection("supplier").find()
+            .skip(page * itemsPerPage)
+            .limit(itemsPerPage)
+            .toArray()
             return result
 
     } catch (error) {

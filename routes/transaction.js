@@ -18,8 +18,10 @@ t_router.post("/", async(req, res) => {
     }
 });
 t_router.get("/", async (req, res) => {
+    const page = req.query.p || 0
+    // console.log(page)
     try{
-        let result = await transact.getAllTrasaction();
+        let result = await transact.getAllTrasaction(page);
         res.status(200).json(result)
     }
     catch(error){

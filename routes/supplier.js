@@ -16,8 +16,9 @@ s_router.post("/", async(req, res) => {
     }
 });
 s_router.get("/", async (req, res) => {
+    const page = req.query.p || 0
     try{
-        let result = await supply.getAllSupplier();
+        let result = await supply.getAllSupplier(page);
         res.status(200).json(result)
     }
     catch(error){
