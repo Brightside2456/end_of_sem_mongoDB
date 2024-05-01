@@ -2,8 +2,9 @@ const { getDb } = require('../db');
 const Employee = require('../models/employeeModel');
 const express = require('express');
 const e_router = express.Router();
-const {authenticate, authorize} = require('../auth/auth')
+// const {authenticate, authorize} = require('../auth/auth')
 const {ObjectId} = require('mongodb')
+const {authenticate, authorize} = require('../auth/auth')
 
 e_router.post("/", async(req, res) => {
     try {
@@ -22,6 +23,7 @@ e_router.get("/", authenticate, authorize(['admin']), async (req, res) => {
         let result = await Employee.getAllProduct(page);
         res.status(200).json(result)
     }
+
     catch(error){
         console.log("Error getting documents", error);
         res.status(500).json({error: "Internal Server Error"})
@@ -43,6 +45,7 @@ e_router.get("/:id", async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 e_router.patch("/:id", async(req, res) => {
     const id = req.params.id
@@ -70,11 +73,8 @@ e_router.delete("/:id", async(req, res) => {
         }
     } catch (error) {
         console.log("Could not delete document with id: ")
-        res.status(500).json({error: "Internal Server Error"})
-        
+        res.status(500).json({error: "Internal Server Error"})        
     }
 })
-
-
 
 module.exports = e_router;

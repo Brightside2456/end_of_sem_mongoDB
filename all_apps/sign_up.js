@@ -4,35 +4,32 @@ const bcrypt = require('bcrypt')
 
 signUp_router.post("/", async(req, res) => {
 
-    const {first_name, last_name, email, username, password, role, phone_number}= req.body
+    const {username, password, role}= req.body
 
     try {
         const db = await getDb()
-    const employeeCollection = db.collection('employee')
+    const loginCollection = db.collection('login')
 
     //check if employee already exists
 
-    let empExists = await employeeCollection.findOne({email: email})
+    let empExists = await loginCollection.findOne({username: username})
     if (empExists){
-        return res.status(409).json({message: "Employee already exists"})
+        return res.status(409).json({message: "Admin already exists"})
     }
 
     //else hash the password
     const hashPass = await bcrypt.hash(password, 10);
 
     newEmp = {
-        first_name,
-        last_name,
-        email,
-        password: hashPass,
-        role,
         username,
-        phone_number
-    };
+        password: hashPass,
+        role
+   
+    };  
 
     
 
-    let result = await employeeCollection.insertOne(newEmp);
+    let result = await loginCollection.insertOne(newEmp);
     if (result){
         res.status(201).json({message: "Employee registered successfully"})
     }

@@ -10,9 +10,9 @@ signin_router.post('/', async(req, res) => {
     try {
         const db = await getDb();
 
-        const employeeCollection = db.collection('employee')
+        const loginCollection = db.collection('login')
 
-        let empExists = await employeeCollection.findOne({username : username});
+        let empExists = await loginCollection.findOne({username : username});
 
         if (!empExists){
             res.status(404). json({message: "User does not exist"})
@@ -24,7 +24,7 @@ signin_router.post('/', async(req, res) => {
             res.status(404). json({message: "Invalid password"})
         }
 
-        const token = jwt.sign({id: empExists._id, role: empExists.role}, process.env.JWT_SECRET, {expiresIn: '1h'});
+        const token = jwt.sign({id: empExists._id, role: empExists.role},  process.env.JWT_SECRET, {expiresIn: '1h'});
 
         res.status(200).json({token})
     } catch (error) {

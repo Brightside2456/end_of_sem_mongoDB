@@ -7,25 +7,29 @@ const jwt = require('jsonwebtoken')
 const authenticate = async (req, res, next) => {
     let token = req.headers['authorization']
 
-   token = token.replace("Bearer ", "")
+   
     // console.log(token)
     if (!token){
         return res.status(401).json({message : "Authentication required"})
     }
+    token = token.replace("Bearer ", "")
+    console.log(token)
 
     try {
         //This is going to verify and decode the token to get the Id and role appended to it
+        console.log(process.env.JWT_SECRET)
         const isValidToken = jwt.verify(token, process.env.JWT_SECRET)
-
         console.log(isValidToken)
         const db = await getDb();
-        const employeeCollection = db.collection('employee')
+        const loginCollection = db.collection('login')
 
         // console.log(isValidToken.id)
-        const employee = await employeeCollection.findOne({_id : new ObjectId(isValidToken.id)})
-        // console.log(employee)
-        // console.log(employee)
+        const employee = await loginCollection.findOne({_id : new ObjectId(isValidToken.id)})
+      
+
+        console.log(employee)
         if(!employee){
+          
             return res.status(404).json({message: "Employee not found"})
         }
 
@@ -44,7 +48,7 @@ const authenticate = async (req, res, next) => {
 const authorize = (roles) => {
     return (req, res, next) => {
 
-        let r =  req.employee.role
+        let r =  req.employee.role.trim()
 
         if (roles.includes(r)) {
             next();
