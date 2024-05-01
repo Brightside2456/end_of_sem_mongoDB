@@ -16,8 +16,9 @@ c_router.post("/", async(req, res) => {
     }
 });
 c_router.get("/", async (req, res) => {
+    const page = req.query.p || 0
     try{
-        let result = await Customer.getAllProduct();
+        let result = await Customer.getAllProduct(page);
         res.status(200).json(result)
     }
     catch(error){

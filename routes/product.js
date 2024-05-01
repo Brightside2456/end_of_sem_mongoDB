@@ -16,8 +16,9 @@ p_router.post("/", async(req, res) => {
     }
 });
 p_router.get("/", async (req, res) => {
+    const page = req.query.p
     try{
-        let result = await product.getAllProduct();
+        let result = await product.getAllProduct(page);
         res.status(200).json(result)
     }
     catch(error){

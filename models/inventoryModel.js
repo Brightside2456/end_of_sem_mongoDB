@@ -27,10 +27,14 @@ async createProduct(inventoryData){
                 throw new Error("Error creating transaction")
         }
 },
-async getAllProduct(){
+async getAllProduct(page){
+        let itemsPerPage = 5
     try {
             const db = await getDb()
-            const result = await db.collection("inventory").find().toArray()
+            const result = await db.collection("inventory").find()
+            .skip(page * itemsPerPage)
+            .limit(itemsPerPage)
+            .toArray()
             return result
 
     } catch (error) {

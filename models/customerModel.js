@@ -31,10 +31,14 @@ const  Customer = {
                     throw new Error("Error creating customer")
             }
     },
-    async getAllProduct(){
+    async getAllProduct(page){
+        let itemsPerPage = 5
         try {
                 const db = await getDb()
-                const result = await db.collection("customer").find().toArray()
+                const result = await db.collection("customer").find()
+                .skip(page * itemsPerPage)
+                .limit(itemsPerPage)
+                .toArray()
                 return result
     
         } catch (error) {

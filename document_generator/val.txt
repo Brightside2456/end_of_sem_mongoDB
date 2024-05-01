@@ -265,3 +265,50 @@ Product
     }
   }
 }
+
+=========================
+new employee
+=========================
+{
+  $jsonSchema: {
+    bsonType: 'object',
+    required: [
+      'first_name',
+      'last_name',
+      'email',
+      'password',
+      'role',
+      'phone_number'
+    ],
+    properties: {
+      first_name: {
+        bsonType: 'string',
+        description: 'Employee first name'
+      },
+      last_name: {
+        bsonType: 'string',
+        description: 'Employee last name'
+      },
+      email: {
+        bsonType: 'string',
+        description: 'Employee email address'
+      },
+      password: {
+        bsonType: 'string',
+        description: 'Employee password'
+      },
+      role: {
+        bsonType: 'string',
+        description: 'Role of employee'
+      },
+      username: {
+        bsonType: 'string',
+        description: 'Employee username'
+      },
+      phone_number: {
+        bsonType: 'string',
+        description: 'Employee phone number'
+      }
+    }
+  }
+}
