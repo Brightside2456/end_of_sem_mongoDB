@@ -4,4 +4,8 @@ node_modules/
 # Ignore .env file
 .env
 
-# ignore 
+# ignore db file
+db.js
+
+#ignore package.json
+package.json
