@@ -5,7 +5,8 @@ and close the connection to that cluster.
 */
 const  {MongoClient} = require('mongodb')
 require('dotenv').config()
-const dbName = "inventorySys"
+
+const dbName = "CartCentral"
 
 let dbConnection
 

@@ -4,7 +4,7 @@ const agr_router = require('express').Router()
 
 
 agr_router.post("/calc/", async(req, res) => {
-    console.log("In Here")
+    // console.log("In Here")
     
     const name = req.body.name;
     const quantity = req.body.quantity;
@@ -25,6 +25,16 @@ agr_router.post("/calc/", async(req, res) => {
 
     res.status(200).json({"Total price": totalPrice});
 
+});
+
+agr_router.get('/trans_per_customer', async(req, res) => {
+    try {
+        let result = await Aggregation.total_trans_per_customerId();
+        res.status(200).json(result)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message  : "Error finding total transactions per customer"})
+    }
 });
 
 module.exports = agr_router
