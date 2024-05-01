@@ -7,7 +7,6 @@ const p_router = require('./routes/product')
 const i_router = require('./routes/inventory')
 const e_router = require('./routes/employee')
 const c_router = require('./routes/customer')
-const sort_router = require('./routes/sorting')
 // const su_router = require("./all_apps/sign_up")
 const agr_router = require('./routes/aggregation')
 // const si_router = require('./all_apps/sign_in')
@@ -58,8 +57,6 @@ app.use("/emp", e_router);
 app.use("/customer", c_router);
 
 app.use("/aggr", agr_router);
-
-app.use("/sort", sort_router);
 
 
 // route to list all collections
