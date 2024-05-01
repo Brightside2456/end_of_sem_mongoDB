@@ -35,7 +35,7 @@ agr_router.get('/trans_per_customer', async(req, res) => {
         console.log(error)
         res.status(500).json({message  : "Error finding total transactions per customer"})
     }
-})
+});
 
 module.exports = agr_router
 
