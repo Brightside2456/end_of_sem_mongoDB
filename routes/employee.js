@@ -2,7 +2,6 @@ const { getDb } = require('../db');
 const Employee = require('../models/employeeModel');
 const express = require('express');
 const e_router = express.Router();
-const {authenticate, authorize} = require('../auth/auth')
 const {ObjectId} = require('mongodb')
 
 e_router.post("/", async(req, res) => {
@@ -16,10 +15,9 @@ e_router.post("/", async(req, res) => {
         res.status(500).json({error: "Internal Server Error"})
     }
 });
-e_router.get("/", authenticate, authorize(['admin']), async (req, res) => {
-    let page = req.query.p
+e_router.get("/", async (req, res) => {
     try{
-        let result = await Employee.getAllProduct(page);
+        let result = await Employee.getAllProduct();
         res.status(200).json(result)
     }
     catch(error){

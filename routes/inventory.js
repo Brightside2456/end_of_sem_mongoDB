@@ -16,9 +16,8 @@ i_router.post("/", async(req, res) => {
     }
 });
 i_router.get("/", async (req, res) => {
-    const page = req.query.p || 0
     try{
-        let result = await Inventory.getAllProduct(page);
+        let result = await Inventory.getAllProduct();
         res.status(200).json(result)
     }
     catch(error){

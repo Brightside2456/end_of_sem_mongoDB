@@ -29,15 +29,10 @@ const  Transaction = {
                     throw new Error("Error creating transaction")
             }
     },
-    async getAllTrasaction(page){
-        const itemsPerPage = 5
+    async getAllTrasaction(){
         try {
                 const db = await getDb()
-                const result = await db.collection("transaction").find()
-                .skip(page * itemsPerPage)
-                .limit(itemsPerPage)
-                .toArray()
-
+                const result = await db.collection("transaction").find().toArray()
                 return result
 
         } catch (error) {

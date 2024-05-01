@@ -143,9 +143,9 @@ def generate_dummy_document(collection_name, column_names, n):
     return documents
 
 # Example usage:
-collection_name = "customer"
+collection_name = "employee"
 column_names = []  # Add column names here if needed
-n = 5  # Number of dummy documents to generate
+n = 30  # Number of dummy documents to generate
 
 dummy_documents = generate_dummy_document(collection_name, column_names, n)
 for doc in dummy_documents:

@@ -31,14 +31,10 @@ async createProduct(employeeData){
                 throw new Error("Error creating employee")
         }
 },
-async getAllProduct(page){
-        let itemsPerPage = 5
+async getAllProduct(){
     try {
             const db = await getDb()
-            const result = await db.collection("employee").find()
-            .skip(page * itemsPerPage)
-            .limit(itemsPerPage)
-            .toArray()
+            const result = await db.collection("employee").find().toArray()
             return result
 
     } catch (error) {
