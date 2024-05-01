@@ -1,4 +1,4 @@
-const { getDb } = require('../db');
+// const { getDb } = require('../db');
 const transact = require('../models/transactionModel');
 const express = require('express');
 const t_router = express.Router();
