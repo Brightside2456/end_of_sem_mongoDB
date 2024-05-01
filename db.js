@@ -5,13 +5,13 @@ and close the connection to that cluster.
 */
 const  {MongoClient} = require('mongodb')
 require('dotenv').config()
-const dbName = "test"
+const dbName = "inventorySys"
 
 let dbConnection
 
 module.exports = {
     connectToDb: (cb) => {
-        MongoClient.connect(process.env.DB_URI)
+        MongoClient.connect("mongodb://0.0.0.0:27017/")
         .then((client) => {
             dbConnection = client.db(dbName)
             return cb()
