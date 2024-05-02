@@ -5,7 +5,6 @@ const agr_router = require('express').Router()
 
 agr_router.post("/calc/", async(req, res) => {
     // console.log("In Here")
-    
     const name = req.body.name;
     const quantity = req.body.quantity;
 
@@ -36,6 +35,16 @@ agr_router.get('/trans_per_customer', async(req, res) => {
         res.status(500).json({message  : "Error finding total transactions per customer"})
     }
 });
+
+agr_router.get('/top_selling', async(req, res) => {
+    try {
+        let result = await Aggregation.getNBestSellingItems(3);
+        res.status(200).json(result)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message  : "Error finding best selling products"})
+    }
+})
 
 module.exports = agr_router
 
