@@ -1,4 +1,5 @@
 const express = require('express')
+const bcrypt = require('bcrypt')
 const {connectToDb, getDb} = require('./db')
 const {ObjectId} = require('mongodb')
 const t_router = require('./routes/transaction')
@@ -30,14 +31,8 @@ connectToDb((err) => {
 })
 
 
+app.use('/sign_up', su_router);
 
-
-
-// app.use("/", auth_router)
-//transaction middleware
-// app.use("/" , express.static("./views"))
-// app.use("/css" express.static(.))
-// app.use('/sign_up', su_router);
 
 // app.use('/sign_in', si_router);
 

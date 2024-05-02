@@ -12,7 +12,9 @@ let dbConnection
 
 module.exports = {
     connectToDb: (cb) => {
+
         MongoClient.connect("mongodb://0.0.0.0:27017/")
+
         .then((client) => {
             dbConnection = client.db(dbName)
             return cb()
