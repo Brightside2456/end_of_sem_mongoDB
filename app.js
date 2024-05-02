@@ -9,10 +9,10 @@ const i_router = require('./routes/inventory')
 const e_router = require('./routes/employee')
 const c_router = require('./routes/customer')
 const sort_router = require('./routes/sorting')
-// const su_router = require("./all_apps/sign_up")
+const su_router = require("./all_apps/sign_up")
 const agr_router = require('./routes/aggregation')
 const complex_router = require('./routes/complexQueries')
-// const si_router = require('./all_apps/sign_in')
+const si_router = require('./all_apps/sign_in')
 const app = express()
 
 app.use(express.json())
@@ -34,7 +34,7 @@ connectToDb((err) => {
 app.use('/sign_up', su_router);
 
 
-// app.use('/sign_in', si_router);
+app.use('/sign_in', si_router);
 
 app.use("/trans", t_router);
 
