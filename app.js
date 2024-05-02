@@ -1,4 +1,5 @@
 const express = require('express')
+const bcrypt = require('bcrypt')
 const {connectToDb, getDb} = require('./db')
 const {ObjectId} = require('mongodb')
 const t_router = require('./routes/transaction')
@@ -10,6 +11,7 @@ const c_router = require('./routes/customer')
 const sort_router = require('./routes/sorting')
 // const su_router = require("./all_apps/sign_up")
 const agr_router = require('./routes/aggregation')
+const complex_router = require('./routes/complexQueries')
 // const si_router = require('./all_apps/sign_in')
 const app = express()
 
@@ -29,14 +31,8 @@ connectToDb((err) => {
 })
 
 
+app.use('/sign_up', su_router);
 
-
-
-// app.use("/", auth_router)
-//transaction middleware
-// app.use("/" , express.static("./views"))
-// app.use("/css" express.static(.))
-// app.use('/sign_up', su_router);
 
 // app.use('/sign_in', si_router);
 
@@ -60,6 +56,8 @@ app.use("/customer", c_router);
 app.use("/aggr", agr_router);
 
 app.use("/sort", sort_router);
+
+app.use("/complex", complex_router)
 
 
 // route to list all collections

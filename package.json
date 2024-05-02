@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.5.0",
+    "node": "^18.20.2",
+    "nodemon": "^3.1.0"
+  },
+  "name": "end_of_sem_mongodb",
+  "description": "Grocify is a cutting-edge retail management system tailored for grocery stores and supermarkets. It utilizes MongoDB as the backend database to efficiently manage inventory, customer data, and sales transactions.",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
