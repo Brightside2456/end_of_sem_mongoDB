@@ -1,20 +1,21 @@
 const {getDb} = require("../db")
 const signUp_router = require("express").Router()
 const bcrypt = require('bcrypt')
+const {authenticate, authorize} = require('../auth/auth')
 
-signUp_router.post("/", async(req, res) => {
+signUp_router.post("/", authenticate, authorize(['admin']), async(req, res) => {
 
-    const {username, password, role}= req.body
+    const {firstname, lastname, email, username, password, role, phone_number}= req.body
 
     try {
         const db = await getDb()
-    const loginCollection = db.collection('login')
+        const loginCollection = db.collection('employee')
 
     //check if employee already exists
 
     let empExists = await loginCollection.findOne({username: username})
     if (empExists){
-        return res.status(409).json({message: "Admin already exists"})
+        return res.status(409).json({message: "Employee already exists"})
     }
 
     //else hash the password

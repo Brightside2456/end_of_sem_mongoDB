@@ -22,7 +22,7 @@ async createProduct(employeeData){
 
                 const db = await getDb()
                 console.log(db);
-                const result = await db.collection("Employees").insertOne(employeeData);
+                const result = await db.collection("employee").insertOne(employeeData);
                 return result
 
 
@@ -35,7 +35,7 @@ async getAllProduct(page){
         let itemsPerPage = 5
     try {
             const db = await getDb()
-            const result = await db.collection("Employees").find()
+            const result = await db.collection("employee").find()
             .skip(page * itemsPerPage)
             .limit(itemsPerPage)
             .toArray()
@@ -50,7 +50,7 @@ async getAllProduct(page){
 async getOneProduct(id){
         try {
                 const db = await getDb()
-                const result = await db.collection("Employees").findOne({_id: new ObjectId(id)})
+                const result = await db.collection("employee").findOne({_id: new ObjectId(id)})
                 return result
     
         } catch (error) {
@@ -61,7 +61,7 @@ async getOneProduct(id){
 async updateProduct(objectId, updateFields){
     try {
             const db = await getDb();
-            result = await db.collection("Employees").updateOne({_id : new ObjectId(objectId)}, {$set : updateFields});
+            result = await db.collection("employee").updateOne({_id : new ObjectId(objectId)}, {$set : updateFields});
             return result
 
     } catch (error) {
@@ -72,7 +72,7 @@ async updateProduct(objectId, updateFields){
 async deleteProduct(objectId){
     try {
             const db = await getDb()
-            const result = await db.collection("Employees").deleteOne({_id : new ObjectId(objectId)})
+            const result = await db.collection("employee").deleteOne({_id : new ObjectId(objectId)})
             return result
     } catch (error) {
             console.log(error);

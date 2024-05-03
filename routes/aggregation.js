@@ -44,7 +44,9 @@ agr_router.get('/top_selling', async(req, res) => {
         console.log(error)
         res.status(500).json({message  : "Error finding best selling products"})
     }
-})
+});
+
+
 
 module.exports = agr_router
 

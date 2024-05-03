@@ -10,18 +10,20 @@ signin_router.post('/', async(req, res) => {
     try {
         const db = await getDb();
 
-        const loginCollection = db.collection('login')
+        const loginCollection = db.collection('employee')
 
         let empExists = await loginCollection.findOne({username : username});
+        // console.log(empExists)
 
         if (!empExists){
-            res.status(404). json({message: "User does not exist"})
+           return res.status(404). json({message: "User does not exist"})
         }
 
 
         let correct_pass = await bcrypt.compare(password, empExists.password);
+        
         if (!correct_pass){
-            res.status(404). json({message: "Invalid password"})
+            return res.status(404). json({message: "Invalid password"})
         }
 
         const token = jwt.sign({id: empExists._id, role: empExists.role},  process.env.JWT_SECRET, {expiresIn: '1h'});

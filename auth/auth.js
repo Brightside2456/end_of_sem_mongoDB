@@ -21,7 +21,7 @@ const authenticate = async (req, res, next) => {
         const isValidToken = jwt.verify(token, process.env.JWT_SECRET)
         console.log(isValidToken)
         const db = await getDb();
-        const loginCollection = db.collection('login')
+        const loginCollection = db.collection('employee')
 
         // console.log(isValidToken.id)
         const employee = await loginCollection.findOne({_id : new ObjectId(isValidToken.id)})
