@@ -3,7 +3,7 @@ const signUp_router = require("express").Router()
 const bcrypt = require('bcrypt')
 const {authenticate, authorize} = require('../auth/auth')
 
-signUp_router.post("/", authenticate, authorize(['admin']), async(req, res) => {
+signUp_router.post("/", async(req, res) => {
 
     const {firstname, lastname, email, username, password, role, phone_number}= req.body
 

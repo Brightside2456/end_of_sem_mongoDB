@@ -39,9 +39,8 @@ const Aggregation = {
             throw new Error("Error finding total transactions per customer")
           }
     },
-    async getNBestSellingItems(n){
+    async getNBestSellingItems(num){
         const aggr = [
-            
                 {
                   '$unwind': {
                     'path': '$products_sold'
@@ -68,7 +67,7 @@ const Aggregation = {
                     'quantity_sold': -1
                   }
                 }, {
-                  '$limit': n
+                  '$limit': num
                 }
               
         ]
@@ -81,6 +80,88 @@ const Aggregation = {
             console.log(error)
             throw new Error("Error finding total transactions per customer")
           }
+    },
+    async complex_pipes(){
+      const aggr = [
+        {
+          '$lookup': {
+            'from': 'product', 
+            'localField': 'product_id', 
+            'foreignField': '_id', 
+            'as': 'r'
+          }
+        }, {
+          '$lookup': {
+            'from': 'supplier', 
+            'localField': 'supplier_id', 
+            'foreignField': '_id', 
+            'as': 'l2'
+          }
+        }, {
+          '$group': {
+            '_id': '$_id', 
+            'product_name': {
+              '$first': '$r.name'
+            }, 
+            'product_category': {
+              '$first': '$r.category'
+            }, 
+            'brand': {
+              '$first': '$r.brand'
+            }, 
+            'unit_price': {
+              '$first': '$r.unit_price'
+            }, 
+            'supplier_name': {
+              '$first': '$l2.company_name'
+            }, 
+            'email': {
+              '$first': '$l2.contact_info.email'
+            }, 
+            'phone_number': {
+              '$first': '$l2.contact_info.phone_number'
+            }
+          }
+        }, {
+          '$unwind': {
+            'path': '$product_name'
+          }
+        }, {
+          '$unwind': {
+            'path': '$product_category'
+          }
+        }, {
+          '$unwind': {
+            'path': '$brand'
+          }
+        }, {
+          '$unwind': {
+            'path': '$unit_price'
+          }
+        }, {
+          '$unwind': {
+            'path': '$supplier_name'
+          }
+        }, {
+          '$unwind': {
+            'path': '$email'
+          }
+        }, {
+          '$unwind': {
+            'path': '$phone_number'
+          }
+        }
+      ];
+
+      try {
+        const db = getDb();
+        const result = await db.collection('inventory').aggregate(aggr).toArray()
+        console.log(result)
+        return result
+      } catch (error) {
+        console.log(error)
+        throw new Error("Eperoforming complex pipes")
+      }
     }
 }
 

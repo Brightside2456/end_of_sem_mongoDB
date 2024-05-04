@@ -6,7 +6,7 @@ const complex_router = express.Router();
 
 
 
-complex_router.get('/transaction/:amount', async (req, res) => {
+complex_router.get('/:amount', async (req, res) => {
     const amount = parseFloat(req.params.amount);
 
     try {
@@ -19,6 +19,7 @@ complex_router.get('/transaction/:amount', async (req, res) => {
         res.status(500).json({ message: "Error retrieving transactions" });
     }
 });
+
 
 complex_router.get('/product/:keyword', async (req, res) => {
     const keyword = req.params.keyword;

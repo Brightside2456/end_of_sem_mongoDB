@@ -1,13 +1,17 @@
 const { Double } = require("mongodb");
 const Aggregation = require("../models/aggregation_functions")
 const bw_router = require('express').Router()
+const {getDb} = require('../db')
 
 
+// const db = await  getDb()
 bw_router.post("/insertFilter", async (req, res) => {
     const documentsToInsert = req.body.documents;
     const filter = req.body.filter;
 
     try {
+        const db = await  getDb()
+        
         const bulkOperations = documentsToInsert.map(documentToInsert => ({
             insertOne: { document: documentToInsert },
         }));
@@ -35,6 +39,8 @@ bw_router.post("/invoice", async (req, res) => {
 
     try {
         // Create bulk operations array
+const db = await  getDb()
+
         const bulkOperations = documentsToInsert.map(documentToInsert => ({
             insertOne: { document: documentToInsert },
         }));

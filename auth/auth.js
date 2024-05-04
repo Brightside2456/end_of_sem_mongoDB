@@ -40,7 +40,7 @@ const authenticate = async (req, res, next) => {
     } catch (error) {
         console.log("After")
         console.log(error)
-        return res.status(403).json({message : "Employee not found"})
+        return res.status(403).json({message : "Invalid Token"})
     }
 }
 

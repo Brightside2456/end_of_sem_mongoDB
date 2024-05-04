@@ -42,6 +42,12 @@ Here's the updated schema for your collections based on the suggested changes:
      - `work_schedule`: Work schedule of the employee.
 
 
+6. **gettingIndex**
+db.transaction.getIndexes()
+
+  **output**
+  
+
 
 ========================================================================
 VALIDATORS FOR COLLECTIONS

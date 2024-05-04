@@ -1,5 +1,6 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
+
 const {connectToDb, getDb} = require('./db')
 const {ObjectId} = require('mongodb')
 const t_router = require('./routes/transaction')
@@ -11,11 +12,15 @@ const c_router = require('./routes/customer')
 const sort_router = require('./routes/sorting')
 const su_router = require("./all_apps/sign_up")
 const agr_router = require('./routes/aggregation')
+const bw_router = require('./routes/bulkWrite')
 const complex_router = require('./routes/complexQueries')
 const si_router = require('./all_apps/sign_in')
+let db = require('./db')
 const app = express()
 
 app.use(express.json())
+
+// app.set('view engine', 'ejs');
 
 connectToDb((err) => {
     if (!err){
@@ -30,6 +35,9 @@ connectToDb((err) => {
     else console.log(err);
 })
 
+// app.get('/', (req, res) => {
+//     res.render('index', {title: "Login System"})
+// })
 
 app.use('/sign_up', su_router);
 
@@ -54,10 +62,14 @@ app.use("/emp", e_router);
 app.use("/customer", c_router);
 
 app.use("/aggr", agr_router);
+//bulkwrite middlewaare
+app.use("/bw", bw_router);
 
 app.use("/sort", sort_router);
 
 app.use("/complex", complex_router)
+
+
 
 
 // route to list all collections
@@ -74,3 +86,19 @@ app.get('/list_collections', async (req, res) => {
     }
 });
 
+// app.get('/transaction', (req, res) => {
+//      let trans = [] db.collection("transaction").find() .forEach(tran => trans.push(tran)) .then(() => { res.status(200).json(trans) console.log(trans) }) .catch(() =>{ res.status(500).json({error: "could not fetch the documents"}) }) })
+
+// cursor and fetching
+app.get('/transaction', (req, res) => {
+    let trans = []
+    db.collection('transaction').find()
+    .forEach(tran => trans.push(tran))
+    .then(() => {res.status(200).json(trans)
+
+        console.log(trans)
+    })
+    .catch(() => res.status(500)
+    .json({error: "could not fetch the documents"})
+)
+})
