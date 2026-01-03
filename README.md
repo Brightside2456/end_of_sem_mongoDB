@@ -40,3 +40,7 @@ Grocify is a cutting-edge retail management system tailored for grocery stores a
 
 #### License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+Thank you
+
+
+Signed, Bright
